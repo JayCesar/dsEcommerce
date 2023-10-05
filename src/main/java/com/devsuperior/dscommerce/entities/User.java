@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,7 +21,12 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // Assim o ID será gerado automáticamente
 	private Long id;
 	private String name;
-	private String email;
+	
+	@Column(unique = true)
+	private String email; 
+	// Caso eu não queira que repita eu uso '@Column(unique = true)'
+	// Protegendo que não repita
+	
 	private String phone;
 	private LocalDate birthDate;
 	private String password;
