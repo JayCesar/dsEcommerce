@@ -1,6 +1,7 @@
 package com.devsuperior.dscommerce.entities;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -11,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -36,6 +38,10 @@ public class Product {
 		inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private Set<Category> categories = new HashSet<>(); // Porque não pode repetir categoria
 
+	@OneToMany(mappedBy = "id.product") // Porque é o Id dentro de OrderItemPk que tem o produto
+	private Set<OrderItem> items = new HashSet<>();
+	
+	
 	public Product() {
 	}
 
@@ -90,5 +96,17 @@ public class Product {
 	public Set<Category> getCategories() {
 		return categories;
 	}
+
+	public Set<OrderItem> getItems() {
+		return items;
+	}
+	
+	public List<Order> getOrders(){
+		return items.stream().map(x -> x.getOrder()).toList();
+	}
+	
+	
+	
+	
 
 }
