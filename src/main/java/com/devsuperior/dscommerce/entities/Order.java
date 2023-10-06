@@ -37,6 +37,7 @@ public class Order {
 	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL) // Peculiaridado da JPA
 	private Payment payment;
 	
+	// Essa a configuração para a classe de associação
 	@OneToMany(mappedBy = "id.order")
 	private Set<OrderItem> items = new HashSet<>();
 	public Order() {}

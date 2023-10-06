@@ -37,7 +37,8 @@ public class Product {
 		joinColumns = @JoinColumn(name = "product_id"), 
 		inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private Set<Category> categories = new HashSet<>(); // Porque não pode repetir categoria
-
+	
+	// Essa a configuração para a classe de associação
 	@OneToMany(mappedBy = "id.product") // Porque é o Id dentro de OrderItemPk que tem o produto
 	private Set<OrderItem> items = new HashSet<>();
 	
