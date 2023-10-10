@@ -22,7 +22,7 @@ public class ProductService {
 	// o retorno precisa ser DTO porque esse dado irá para o controller
 	@Transactional(readOnly = true) // Assim digo que estou apenas lendo(fica mais rápido)
 	public ProductDTO findById(Long id) {
-		Optional<Product> result = repository.findById(id);
+		Optional<Product> result = repository.findById(id); // Esse vai no banco de dados
 		Product product = result.get(); // Assim que salvo
 		// Product product = repository.findById(id).get(); // Outro jeito
 		ProductDTO productDTO = new ProductDTO(product);
@@ -37,17 +37,29 @@ public class ProductService {
 		return result.map(x -> new ProductDTO(x)); // Converti para ProductDO (Lambda)
 	}
 	
-	// Post
+	// POST
 	@Transactional
 	public ProductDTO insert(ProductDTO dto) { 
-		Product entity = new Product();
+		Product entity = new Product(); // Não é monitrado pela JPA
+		copyDtoToEntity(dto, entity);
+		entity = repository.save(entity); // É assim que se salva no BD
+		return new ProductDTO(entity); // Retorno em formato DTO
+	}
+	
+	// PUT
+	@Transactional
+	public ProductDTO update(Long id, ProductDTO dto) { // Id + o corpo (body)
+		Product entity = repository.getReferenceById(id); 
+		// Não vai no banco de dados (é monitorado pala JPA), é uma referência
+		copyDtoToEntity(dto, entity);
+		entity = repository.save(entity); // É assim que se salva no BD
+		return new ProductDTO(entity); // Retorno em formato DTO
+	}
+
+	private void copyDtoToEntity(ProductDTO dto, Product entity) {
 		entity.setName(dto.getName());
 		entity.setDescription(dto.getDescription());
 		entity.setPrice(dto.getPrice());
 		entity.setImgUrl(dto.getImgUrl());
-		
-		entity = repository.save(entity); // É assim que se salva no BD
-		
-		return new ProductDTO(entity); // Retorno em formato DTO
 	}
 }
