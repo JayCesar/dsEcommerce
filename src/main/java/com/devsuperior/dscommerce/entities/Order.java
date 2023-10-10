@@ -35,7 +35,7 @@ public class Order {
 	@JoinColumn(name = "client_id")
 	private User client;
 	
-	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL) // Peculiaridado da JPA
+	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL) // Peculiaridades da JPA
 	private Payment payment;
 	
 	// Essa a configuração para a classe de associação
