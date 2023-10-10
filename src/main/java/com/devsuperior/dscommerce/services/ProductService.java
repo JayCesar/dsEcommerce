@@ -18,7 +18,7 @@ public class ProductService {
 	@Autowired
 	private ProductRepository repository;
 	
-	// Read by ID
+	// READ ID
 	// o retorno precisa ser DTO porque esse dado irá para o controller
 	@Transactional(readOnly = true) // Assim digo que estou apenas lendo(fica mais rápido)
 	public ProductDTO findById(Long id) {
@@ -30,7 +30,7 @@ public class ProductService {
 		// return new ProductDTO(product); // outra forma
 	}
 	
-	// Read all Products
+	// READL ALL PRODUCTS
 	@Transactional(readOnly = true) 
 	public Page<ProductDTO> findAll(Pageable pageable) { // Assim consigo listar de forma listada (não tudo)
 		Page<Product> result = repository.findAll(pageable); // Vai retornar todos os registros da entidade product.
@@ -54,6 +54,12 @@ public class ProductService {
 		copyDtoToEntity(dto, entity);
 		entity = repository.save(entity); // É assim que se salva no BD
 		return new ProductDTO(entity); // Retorno em formato DTO
+	}
+	
+	// DELETE
+	@Transactional // Assim digo que estou apenas lendo(fica mais rápido)
+	public void delete(Long id) {
+		repository.deleteById(id);
 	}
 
 	private void copyDtoToEntity(ProductDTO dto, Product entity) {
