@@ -29,9 +29,9 @@ public class ProductController {
 	@GetMapping(value = "/{id}") // Esse método sera acessado por nessa rota
 	public ResponseEntity<ProductDTO> findById(@PathVariable Long id) { // Assim consigo conversar com o 'id'!
 		ProductDTO dto = productService.findById(id);
-		return ResponseEntity.ok(dto); // Assim eu consigo customizar
-		// o 'ok' é o código 200
+		return ResponseEntity.ok(dto); 
 	}
+	
 	
 	// Listando todos os produtos
 	@GetMapping
