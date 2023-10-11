@@ -32,7 +32,6 @@ public class ProductController {
 		return ResponseEntity.ok(dto); 
 	}
 	
-	
 	// Listando todos os produtos
 	@GetMapping
 	public ResponseEntity<Page<ProductDTO>>	findAll(Pageable pageable) { 
@@ -61,7 +60,7 @@ public class ProductController {
 	@DeleteMapping(value = "/{id}") 
 	public ResponseEntity<Void> delete(@PathVariable Long id) { 
 		productService.delete(id);
-		// Quando a respsota dá certo e não tem corpo na resposta, o código é 204
+		// Quando a resposta dá certo e não tem corpo na resposta, o código é 204
 		return ResponseEntity.noContent().build();
 	}
 	
