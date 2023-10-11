@@ -19,6 +19,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.devsuperior.dscommerce.dto.ProductDTO;
 import com.devsuperior.dscommerce.services.ProductService;
 
+import jakarta.validation.Valid;
+
 @RestController // Vai responder pela web
 @RequestMapping(value = "/products") // Configuro o que será acessado
 public class ProductController {
@@ -41,7 +43,7 @@ public class ProductController {
 	
 	// Salvando
 	@PostMapping
-	public ResponseEntity<ProductDTO> insert(@RequestBody ProductDTO dto) { // Com isso eu digo que é o corpo da requisição que vai entrar no parâmetro
+	public ResponseEntity<ProductDTO> insert(@Valid @RequestBody ProductDTO dto) { // @RequestBody: Com isso eu digo que é o corpo da requisição que vai entrar no parâmetro
 		dto = productService.insert(dto);
 		// Para retornar o código 201 (recurso criado)
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -51,7 +53,7 @@ public class ProductController {
 	
 	// Atualizando
 	@PutMapping(value = "/{id}") 
-	public ResponseEntity<ProductDTO> update(@PathVariable Long id, @RequestBody ProductDTO dto) { 
+	public ResponseEntity<ProductDTO> update(@PathVariable Long id, @Valid @RequestBody ProductDTO dto) { 
 		dto = productService.update(id, dto);
 		return ResponseEntity.ok(dto); 
 	}
